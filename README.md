@@ -1,14 +1,4 @@
-# DMS Bridge
-
-Forked from Repository https://github.com/gnosis/MultiSigWallet
-
-The following features have been changed
-- Change the version of the smart contract to 0.8.2.
-- Change to hardhat instead of truffle
-
-The following features have been added
-- Implement a feature that provides the address of the owner's multi-sig wallet contracts
-- The interface and the class were separated
+# ACC Bridge
 
 ## Install NodeJS
 
@@ -23,8 +13,8 @@ npm install -g yarn
 ## Install Project
 
 ```shell
-git clone https://github.com/bosagora/dms-bridge.git
-cd dms-bridge
+git clone https://github.com/acc-coin/acc-bridge.git
+cd acc-bridge
 yarn install
 ```
 

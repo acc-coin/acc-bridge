@@ -1,5 +1,5 @@
 {
-    "name": "dms-bridge-contracts-lib-v2",
+    "name": "acc-bridge-contracts-lib-v2",
     "version": "2.0.0",
     "description": "",
     "main": "dist/bundle-cjs.js",
@@ -15,14 +15,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bosagora/dms-bridge"
+        "url": "git+https://github.com/acc-coin/acc-bridge"
     },
     "author": "BOSagora Foundation",
     "license": "LGPL-3.0",
     "bugs": {
-        "url": "https://github.com/bosagora/dms-bridge/issues"
+        "url": "https://github.com/acc-coin/acc-bridge/issues"
     },
-    "homepage": "https://github.com/bosagora/dms-bridge#readme",
+    "homepage": "https://github.com/acc-coin/acc-bridge#readme",
     "devDependencies": {
         "@rollup/plugin-json": "^4.1.0",
         "@rollup/plugin-typescript": "^8.3.1",
