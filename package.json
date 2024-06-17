@@ -1,8 +1,8 @@
 {
-  "name": "dms-bridge",
+  "name": "acc-bridge",
   "version": "1.0.0",
-  "description": "DMS Bridge",
-  "repository": "https://github.com/bosagora/dms-bridge",
+  "description": "ACC Bridge",
+  "repository": "https://github.com/acc-coin/acc-bridge",
   "author": "BOSagora Foundation",
   "license": "LGPL-3.0",
   "private": true,

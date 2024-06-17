@@ -1,7 +1,7 @@
 {
-    "name": "bridge-validator-v2",
+    "name": "acc-bridge-validator-v2",
     "version": "2.0.0",
-    "description": "Bridge validator the decentralized loyalty point system",
+    "description": "Bridge validator the decentralized loyalty system",
     "main": "src/main.js",
     "directories": {
         "test": "test"
@@ -20,14 +20,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bosagora/dms-bridge.git"
+        "url": "git+https://github.com/acc-coin/acc-bridge.git"
     },
     "author": "BOSagora Foundation",
     "license": "AGPL-3.0-or-later",
     "bugs": {
-        "url": "https://github.com/bosagora/dms-bridge/issues"
+        "url": "https://github.com/acc-coin/acc-bridge/issues"
     },
-    "homepage": "https://github.com/bosagora/dms-bridge#readme",
+    "homepage": "https://github.com/acc-coin/acc-bridge#readme",
     "dependencies": {
         "@ethersproject/abi": "^5.7.0",
         "@ethersproject/abstract-signer": "^5.7.0",
@@ -68,7 +68,7 @@
         "chai": "^4.3.7",
         "chai-http": "^4.3.7",
         "cors": "^2.8.5",
-        "dms-bridge-contracts-v2": "~2.0.0",
+        "acc-bridge-contracts-v2": "~2.0.0",
         "dom-parser": "^1.1.5",
         "dotenv": "^10.0.0",
         "ethereum-waffle": "^4.0.10",

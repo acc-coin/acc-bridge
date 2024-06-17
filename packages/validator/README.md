@@ -1,1 +1,1 @@
-# bridge-validator
+# acc-bridge-validator

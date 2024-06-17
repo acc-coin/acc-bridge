@@ -1,7 +1,7 @@
 {
-    "name": "dms-bridge-contracts-v2",
+    "name": "acc-bridge-contracts-v2",
     "version": "2.0.0",
-    "description": "Smart Contracts of DMS Bridge",
+    "description": "Bridge smart contracts of for decentralized loyalty systems",
     "files": [
         "**/*.sol"
     ],
@@ -18,14 +18,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bosagora/dms-bridge"
+        "url": "git+https://github.com/acc-coin/acc-bridge"
     },
     "author": "BOSagora Foundation",
     "license": "LGPL-3.0",
     "bugs": {
-        "url": "https://github.com/bosagora/dms-bridge/issues"
+        "url": "https://github.com/acc-coin/acc-bridge/issues"
     },
-    "homepage": "https://github.com/bosagora/dms-bridge#readme",
+    "homepage": "https://github.com/acc-coin/acc-bridge#readme",
     "devDependencies": {
         "@ethersproject/constants": "^5.7.0",
         "@nomiclabs/hardhat-ethers": "^2.2.3",
