@@ -48,5 +48,3 @@ bridge:
         - "${BRIDGE_VALIDATOR1}"
         - "${BRIDGE_VALIDATOR2}"
         - "${BRIDGE_VALIDATOR3}"
-        - "${BRIDGE_VALIDATOR4}"
-        - "${BRIDGE_VALIDATOR5}"

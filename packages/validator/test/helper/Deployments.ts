@@ -44,8 +44,6 @@ export class Deployments {
             bridgeValidator1,
             bridgeValidator2,
             bridgeValidator3,
-            bridgeValidator4,
-            bridgeValidator5,
             user01,
             user02,
             user03,
@@ -61,13 +59,7 @@ export class Deployments {
         this.accounts = {
             deployer,
             fee,
-            bridgeValidators: [
-                bridgeValidator1,
-                bridgeValidator2,
-                bridgeValidator3,
-                bridgeValidator4,
-                bridgeValidator5,
-            ],
+            bridgeValidators: [bridgeValidator1, bridgeValidator2, bridgeValidator3],
             users: [user01, user02, user03, user04, user05, user06, user07, user08, user09, user10],
         };
     }

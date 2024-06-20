@@ -7,16 +7,8 @@ import { BaseContract, Wallet } from "ethers";
 
 import { HardhatAccount } from "../../src/HardhatAccount";
 import { Amount, BOACoin } from "../../src/utils/Amount";
-import { ContractUtils } from "../../src/utils/ContractUtils";
 
 import { Bridge, BridgeValidator, TestLYT } from "../../typechain-types";
-
-interface IShopData {
-    shopId: string;
-    name: string;
-    currency: string;
-    wallet: Wallet;
-}
 
 interface IDeployedContract {
     name: string;
@@ -48,8 +40,6 @@ export class Deployments {
             bridgeValidator1,
             bridgeValidator2,
             bridgeValidator3,
-            bridgeValidator4,
-            bridgeValidator5,
             user01,
             user02,
             user03,
@@ -75,13 +65,7 @@ export class Deployments {
         this.accounts = {
             deployer,
             fee,
-            bridgeValidators: [
-                bridgeValidator1,
-                bridgeValidator2,
-                bridgeValidator3,
-                bridgeValidator4,
-                bridgeValidator5,
-            ],
+            bridgeValidators: [bridgeValidator1, bridgeValidator2, bridgeValidator3],
             users: [user01, user02, user03, user04, user05, user06, user07, user08, user09, user10],
             shops: [shop01, shop02, shop03, shop04, shop05, shop06, shop07, shop08, shop09, shop10],
         };
