@@ -8,22 +8,35 @@ import "solidity-docgen";
 
 import * as dotenv from "dotenv";
 import { Wallet } from "ethers";
-import { HardhatAccount } from "./src/HardhatAccount";
 
 dotenv.config({ path: "env/.env" });
 
+// tslint:disable-next-line:no-var-requires
+const secureEnv = require("secure-env");
+import extend from "extend";
+
+import { HardhatAccount } from "./src/HardhatAccount";
+
 function getAccounts() {
+    if (HardhatAccount.keys.length !== 0) return HardhatAccount.keys;
+    console.log(`Wallet file name: ${process.env.WALLET_ENV}`);
+    process.env = extend(
+        true,
+        process.env,
+        secureEnv({ path: process.env.WALLET_ENV, secret: process.env.WALLET_SECRET })
+    );
+
     const accounts: string[] = [];
     const reg_bytes64: RegExp = /^(0x)[0-9a-f]{64}$/i;
     if (
-        process.env.DEPLOYER !== undefined &&
-        process.env.DEPLOYER.trim() !== "" &&
-        reg_bytes64.test(process.env.DEPLOYER)
+        process.env.DEPLOYER_SIDE_CHAIN !== undefined &&
+        process.env.DEPLOYER_SIDE_CHAIN.trim() !== "" &&
+        reg_bytes64.test(process.env.DEPLOYER_SIDE_CHAIN)
     ) {
-        accounts.push(process.env.DEPLOYER);
+        accounts.push(process.env.DEPLOYER_SIDE_CHAIN);
     } else {
-        process.env.DEPLOYER = Wallet.createRandom().privateKey;
-        accounts.push(process.env.DEPLOYER);
+        process.env.DEPLOYER_SIDE_CHAIN = Wallet.createRandom().privateKey;
+        accounts.push(process.env.DEPLOYER_SIDE_CHAIN);
     }
 
     if (process.env.FEE !== undefined && process.env.FEE.trim() !== "" && reg_bytes64.test(process.env.FEE)) {
@@ -99,39 +112,15 @@ function getAccounts() {
         accounts.push(process.env.BRIDGE_VALIDATOR3);
     }
 
-    if (
-        process.env.BRIDGE_VALIDATOR4 !== undefined &&
-        process.env.BRIDGE_VALIDATOR4.trim() !== "" &&
-        reg_bytes64.test(process.env.BRIDGE_VALIDATOR4)
-    ) {
-        accounts.push(process.env.BRIDGE_VALIDATOR4);
-    } else {
-        process.env.BRIDGE_VALIDATOR4 = Wallet.createRandom().privateKey;
-        accounts.push(process.env.BRIDGE_VALIDATOR4);
-    }
-
-    if (
-        process.env.BRIDGE_VALIDATOR5 !== undefined &&
-        process.env.BRIDGE_VALIDATOR5.trim() !== "" &&
-        reg_bytes64.test(process.env.BRIDGE_VALIDATOR5)
-    ) {
-        accounts.push(process.env.BRIDGE_VALIDATOR5);
-    } else {
-        process.env.BRIDGE_VALIDATOR5 = Wallet.createRandom().privateKey;
-        accounts.push(process.env.BRIDGE_VALIDATOR5);
-    }
-
-    while (accounts.length < 100) {
+    while (accounts.length < 70) {
         accounts.push(Wallet.createRandom().privateKey);
     }
 
-    if (HardhatAccount.keys.length === 0) {
-        for (const account of accounts) {
-            HardhatAccount.keys.push(account);
-        }
+    for (const account of accounts) {
+        HardhatAccount.keys.push(account);
     }
 
-    return accounts;
+    return HardhatAccount.keys;
 }
 
 function getTestAccounts() {
