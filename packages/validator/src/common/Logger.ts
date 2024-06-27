@@ -3,7 +3,7 @@ import * as winston from "winston";
 const { combine, timestamp, printf, colorize } = winston.format;
 // tslint:disable-next-line:no-shadowed-variable
 const customFormat = printf(({ level, timestamp, message }) => {
-    return `${timestamp} ${level} ${message}`;
+    return `${level.toUpperCase()} [${timestamp}] ${message}`;
 });
 
 export class Logger {
@@ -13,7 +13,6 @@ export class Logger {
             handleExceptions: true,
             json: false,
             format: combine(
-                colorize({ all: true }),
                 timestamp({
                     format: "YYYY-MM-DD HH:mm:ss",
                 }),
