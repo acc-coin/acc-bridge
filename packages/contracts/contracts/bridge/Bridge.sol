@@ -295,16 +295,16 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
         require(tokenInfos[_tokenId].status == TokenStatus.Registered, "1713");
 
         if (tokenInfos[_tokenId].native) {
-            require(liquidity[_tokenId][_msgSender()] > _amount, "1514");
-            require(address(this).balance > _amount, "1511");
+            require(liquidity[_tokenId][_msgSender()] >= _amount, "1514");
+            require(address(this).balance >= _amount, "1511");
 
             payable(_msgSender()).transfer(_amount);
             liquidity[_tokenId][_msgSender()] -= _amount;
             emit WithdrawnLiquidity(_tokenId, _msgSender(), _amount, liquidity[_tokenId][_msgSender()]);
         } else {
             BIP20DelegatedTransfer token = tokenInfos[_tokenId].token;
-            require(liquidity[_tokenId][_msgSender()] > _amount, "1514");
-            require(token.balanceOf(address(this)) > _amount, "1511");
+            require(liquidity[_tokenId][_msgSender()] >= _amount, "1514");
+            require(token.balanceOf(address(this)) >= _amount, "1511");
             require(_amount % 1 gwei == 0, "1030");
 
             token.transfer(_msgSender(), _amount);
