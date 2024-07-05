@@ -48,5 +48,9 @@ interface IBridge {
 
     function changeFee(bytes32 _tokenId, uint256 _fee) external;
 
+    function getFeeAccount() external view returns (address);
+
+    function changeFeeAccount(address _feeAccount) external;
+
     function getTotalLiquidity(bytes32 _tokenId) external view returns (uint256);
 }

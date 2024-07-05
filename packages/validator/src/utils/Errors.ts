@@ -47,6 +47,7 @@ export class ResponseMessage {
         ["1534", "The period for cancellation of payment has expired"],
         ["1711", "Already Exist Deposit"],
         ["1712", "No Exist Withdraw"],
+        ["1714", "Set up an appropriate fee"],
         ["1715", "Already Confirm Withdraw"],
         ["1717", "Does not match the address registered on the bridge"],
         ["1718", "Does not match the amount registered on the bridge"],

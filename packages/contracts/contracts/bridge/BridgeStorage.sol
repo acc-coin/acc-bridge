@@ -30,4 +30,9 @@ contract BridgeStorage {
     address internal feeAccount;
 
     IBridgeValidator internal validatorContract;
+
+    uint256 public TOKEN_MAX_FEE;
+    uint256 public TOKEN_DEFAULT_FEE;
+    uint256 public NATIVE_MAX_FEE;
+    uint256 public NATIVE_DEFAULT_FEE;
 }

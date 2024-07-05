@@ -33,7 +33,7 @@ describe("Test for Ledger", () => {
     let bridgeContract: Bridge;
 
     const amount = Amount.make(100_000, 18).value;
-    const fee = Amount.make(5, 18).value;
+    const fee = Amount.make(0.1, 18).value;
 
     const deployAllContract = async (shopData: IShopData[]) => {
         await deployments.doDeployAll();
