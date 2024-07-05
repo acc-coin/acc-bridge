@@ -173,7 +173,7 @@ async function deployBridge(accounts: IAccount, deployment: Deployments) {
     const factory = await ethers.getContractFactory("Bridge");
     const contract = (await upgrades.deployProxy(
         factory.connect(accounts.deployer),
-        [await deployment.getContractAddress("BridgeValidator"), accounts.fee.address],
+        [deployment.getContractAddress("BridgeValidator"), accounts.fee.address],
         {
             initializer: "initialize",
             kind: "uups",
