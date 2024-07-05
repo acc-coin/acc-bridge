@@ -1,6 +1,6 @@
 {
     "name": "acc-bridge-contracts-v2",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "description": "Bridge smart contracts of for decentralized loyalty systems",
     "files": [
         "**/*.sol"

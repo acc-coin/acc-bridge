@@ -44,13 +44,9 @@ interface IBridge {
 
     function getWithdrawInfo(bytes32 _withdrawId) external view returns (WithdrawData memory);
 
-    function getFee(bytes32 _tokenId) external view returns (uint256);
+    function getProtocolFee(bytes32 _tokenId) external view returns (uint256);
 
-    function changeFee(bytes32 _tokenId, uint256 _fee) external;
-
-    function getFeeAccount() external view returns (address);
-
-    function changeFeeAccount(address _feeAccount) external;
+    function changeProtocolFee(bytes32 _tokenId, uint256 _fee) external;
 
     function getTotalLiquidity(bytes32 _tokenId) external view returns (uint256);
 }
