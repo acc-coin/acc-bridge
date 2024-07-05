@@ -27,12 +27,7 @@ contract BridgeStorage {
     mapping(bytes32 => IBridge.WithdrawData) internal withdraws;
     mapping(bytes32 => mapping(address => bool)) internal confirmations;
     mapping(bytes32 => mapping(address => uint256)) internal liquidity;
-    address internal feeAccount;
+    address internal protocolFeeAccount;
 
     IBridgeValidator internal validatorContract;
-
-    uint256 public TOKEN_MAX_FEE;
-    uint256 public TOKEN_DEFAULT_FEE;
-    uint256 public NATIVE_MAX_FEE;
-    uint256 public NATIVE_DEFAULT_FEE;
 }

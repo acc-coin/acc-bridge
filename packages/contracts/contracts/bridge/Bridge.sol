@@ -49,17 +49,12 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
         _;
     }
 
-    function initialize(address _validatorAddress, address _feeAccount) external initializer {
+    function initialize(address _validatorAddress, address _protocolFeeAccount) external initializer {
         __UUPSUpgradeable_init();
         __Ownable_init_unchained();
 
-        feeAccount = _feeAccount;
+        protocolFeeAccount = _protocolFeeAccount;
         validatorContract = IBridgeValidator(_validatorAddress);
-
-        TOKEN_MAX_FEE = 5e18;
-        TOKEN_DEFAULT_FEE = 1e17;
-        NATIVE_MAX_FEE = 5e18;
-        NATIVE_DEFAULT_FEE = 1e17;
     }
 
     function _authorizeUpgrade(address newImplementation) internal virtual override {
@@ -83,7 +78,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                 address(0x0),
                 TokenStatus.Registered,
                 true,
-                NATIVE_DEFAULT_FEE
+                BridgeLib.NATIVE_DEFAULT_PROTOCOL_FEE
             );
             emit TokenRegistered(_tokenId, _tokenAddress);
         } else {
@@ -92,7 +87,13 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
             bytes32 tokenId = BridgeLib.getTokenId(token.name(), token.symbol());
             require(tokenId == _tokenId);
 
-            tokenInfos[_tokenId] = TokenInfo(token, _tokenAddress, TokenStatus.Registered, false, TOKEN_DEFAULT_FEE);
+            tokenInfos[_tokenId] = TokenInfo(
+                token,
+                _tokenAddress,
+                TokenStatus.Registered,
+                false,
+                BridgeLib.TOKEN_DEFAULT_PROTOCOL_FEE
+            );
             emit TokenRegistered(_tokenId, _tokenAddress);
         }
     }
@@ -157,7 +158,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                 uint256 withdrawalAmount = _amount - tokenInfos[_tokenId].fee;
                 if (address(this).balance >= withdraws[_withdrawId].amount) {
                     payable(_account).transfer(withdrawalAmount);
-                    payable(feeAccount).transfer(tokenInfos[_tokenId].fee);
+                    payable(protocolFeeAccount).transfer(tokenInfos[_tokenId].fee);
                     withdraws[_withdrawId].executed = true;
                     emit BridgeWithdrawn(_tokenId, _withdrawId, _account, withdrawalAmount, 0);
                 }
@@ -185,7 +186,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                 uint256 withdrawalAmount = _amount - tokenInfos[_tokenId].fee;
                 if (token.balanceOf(address(this)) >= withdraws[_withdrawId].amount) {
                     token.transfer(_account, withdrawalAmount);
-                    token.transfer(feeAccount, tokenInfos[_tokenId].fee);
+                    token.transfer(protocolFeeAccount, tokenInfos[_tokenId].fee);
                     withdraws[_withdrawId].executed = true;
                     emit BridgeWithdrawn(_tokenId, _withdrawId, _account, withdrawalAmount, 0);
                 }
@@ -205,7 +206,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
             if (tokenInfos[tokenId].native) {
                 if (address(this).balance >= withdraws[_withdrawId].amount) {
                     payable(withdraws[_withdrawId].account).transfer(withdrawalAmount);
-                    payable(feeAccount).transfer(tokenInfos[tokenId].fee);
+                    payable(protocolFeeAccount).transfer(tokenInfos[tokenId].fee);
                     withdraws[_withdrawId].executed = true;
                     emit BridgeWithdrawn(tokenId, _withdrawId, withdraws[_withdrawId].account, withdrawalAmount, 0);
                 }
@@ -213,7 +214,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                 BIP20DelegatedTransfer token = tokenInfos[tokenId].token;
                 if (token.balanceOf(address(this)) >= withdraws[_withdrawId].amount) {
                     token.transfer(withdraws[_withdrawId].account, withdrawalAmount);
-                    token.transfer(feeAccount, tokenInfos[tokenId].fee);
+                    token.transfer(protocolFeeAccount, tokenInfos[tokenId].fee);
                     withdraws[_withdrawId].executed = true;
                     emit BridgeWithdrawn(tokenId, _withdrawId, withdraws[_withdrawId].account, withdrawalAmount, 0);
                 }
@@ -252,29 +253,29 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
         return withdraws[_withdrawId];
     }
 
-    function getFee(bytes32 _tokenId) external view override returns (uint256) {
+    function getProtocolFee(bytes32 _tokenId) external view override returns (uint256) {
         return tokenInfos[_tokenId].fee;
     }
 
-    function changeFee(bytes32 _tokenId, uint256 _fee) external override {
+    function changeProtocolFee(bytes32 _tokenId, uint256 _fee) external override {
         if (_tokenId == bytes32(0x00)) {
-            require(_fee <= NATIVE_MAX_FEE, "1714");
+            require(_fee <= BridgeLib.NATIVE_MAX_PROTOCOL_FEE, "1714");
         } else {
-            require(_fee <= TOKEN_MAX_FEE, "1714");
+            require(_fee <= BridgeLib.TOKEN_MAX_PROTOCOL_FEE, "1714");
         }
         require(tokenInfos[_tokenId].status == TokenStatus.Registered, "1713");
         require(_msgSender() == owner(), "1050");
         tokenInfos[_tokenId].fee = _fee;
     }
 
-    function getFeeAccount() external view override returns (address) {
-        return feeAccount;
+    function getProtocolFeeAccount() external view returns (address) {
+        return protocolFeeAccount;
     }
 
-    function changeFeeAccount(address _feeAccount) external override {
-        require(_msgSender() == feeAccount, "1050");
+    function changeProtocolFeeAccount(address _protocolFeeAccount) external {
+        require(_msgSender() == protocolFeeAccount, "1050");
 
-        feeAccount = _feeAccount;
+        protocolFeeAccount = _protocolFeeAccount;
     }
 
     /// @notice 브리지를 위한 전체 유동성 자금을 조회합니다.
