@@ -117,7 +117,7 @@ describe("Test for Ledger", () => {
     it("Withdraw native token from Main Bridge", async () => {
         const oldLiquidity = await hre.ethers.provider.getBalance(bridgeContract.address);
         const oldTokenBalance = await hre.ethers.provider.getBalance(deployments.accounts.users[0].address);
-        const oldFeeBalance = await hre.ethers.provider.getBalance(deployments.accounts.fee.address);
+        const oldFeeBalance = await hre.ethers.provider.getBalance(deployments.accounts.protocolFee.address);
 
         await bridgeContract
             .connect(deployments.accounts.bridgeValidators[0])
@@ -139,7 +139,7 @@ describe("Test for Ledger", () => {
         expect(await hre.ethers.provider.getBalance(deployments.accounts.users[0].address)).to.deep.equal(
             oldTokenBalance.add(amount.sub(fee))
         );
-        expect(await hre.ethers.provider.getBalance(deployments.accounts.fee.address)).to.deep.equal(
+        expect(await hre.ethers.provider.getBalance(deployments.accounts.protocolFee.address)).to.deep.equal(
             oldFeeBalance.add(fee)
         );
     });
@@ -180,7 +180,7 @@ describe("Test for Ledger", () => {
     it("Withdraw BIB20 token from Main Bridge", async () => {
         const oldLiquidity = await tokenContract.balanceOf(bridgeContract.address);
         const oldTokenBalance = await tokenContract.balanceOf(deployments.accounts.users[0].address);
-        const oldFeeBalance = await tokenContract.balanceOf(deployments.accounts.fee.address);
+        const oldFeeBalance = await tokenContract.balanceOf(deployments.accounts.protocolFee.address);
 
         await bridgeContract
             .connect(deployments.accounts.bridgeValidators[0])
@@ -201,6 +201,8 @@ describe("Test for Ledger", () => {
         expect(await tokenContract.balanceOf(deployments.accounts.users[0].address)).to.deep.equal(
             oldTokenBalance.add(amount.sub(fee))
         );
-        expect(await tokenContract.balanceOf(deployments.accounts.fee.address)).to.deep.equal(oldFeeBalance.add(fee));
+        expect(await tokenContract.balanceOf(deployments.accounts.protocolFee.address)).to.deep.equal(
+            oldFeeBalance.add(fee)
+        );
     });
 });

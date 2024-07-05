@@ -19,7 +19,7 @@ interface IDeployedContract {
 
 export interface IAccount {
     deployer: Wallet;
-    fee: Wallet;
+    protocolFee: Wallet;
     bridgeValidators: Wallet[];
     users: Wallet[];
 }
@@ -40,7 +40,7 @@ export class Deployments {
         const raws = HardhatAccount.keys.map((m) => new Wallet(m, hre.ethers.provider));
         const [
             deployer,
-            fee,
+            protocolFee,
             bridgeValidator1,
             bridgeValidator2,
             bridgeValidator3,
@@ -58,7 +58,7 @@ export class Deployments {
 
         this.accounts = {
             deployer,
-            fee,
+            protocolFee,
             bridgeValidators: [bridgeValidator1, bridgeValidator2, bridgeValidator3],
             users: [user01, user02, user03, user04, user05, user06, user07, user08, user09, user10],
         };
@@ -164,7 +164,7 @@ async function deployBridge(accounts: IAccount, deployment: Deployments) {
     const factory = await hre.ethers.getContractFactory("Bridge");
     const contract = (await hre.upgrades.deployProxy(
         factory.connect(accounts.deployer),
-        [await deployment.getContractAddress("BridgeValidator"), accounts.fee.address],
+        [deployment.getContractAddress("BridgeValidator"), accounts.protocolFee.address],
         {
             initializer: "initialize",
             kind: "uups",

@@ -1,4 +1,5 @@
 import { IBridge__factory } from "../../typechain-types";
+// @ts-ignore
 import { IBridgeInterface } from "../../typechain-types/dms-bridge-contracts/contracts/interfaces/IBridge";
 import { ValidatorStorage } from "../storage/ValidatorStorage";
 
