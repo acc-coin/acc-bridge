@@ -7,7 +7,10 @@ contract TestLYT is BIP20DelegatedTransfer {
     /*
      * Public functions
      */
-    constructor(address owner_, address feeAccount_) BIP20DelegatedTransfer("Loyalty Coin", "LYT", owner_, feeAccount_) {
+    constructor(
+        address owner_,
+        address feeAccount_
+    ) BIP20DelegatedTransfer("Loyalty Coin", "LYT", owner_, feeAccount_) {
         _mint(owner_, 1e10 * 1e18);
     }
 

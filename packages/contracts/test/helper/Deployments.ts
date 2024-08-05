@@ -114,7 +114,9 @@ async function deployToken(accounts: IAccount, deployment: Deployments) {
     console.log(`Deploy ${contractName}...`);
 
     const factory = await ethers.getContractFactory("TestLYT");
-    const contract = (await factory.connect(accounts.deployer).deploy(accounts.deployer.address, accounts.protocolFee.address)) as TestLYT;
+    const contract = (await factory
+        .connect(accounts.deployer)
+        .deploy(accounts.deployer.address, accounts.protocolFee.address)) as TestLYT;
     await contract.deployed();
     await contract.deployTransaction.wait();
 
