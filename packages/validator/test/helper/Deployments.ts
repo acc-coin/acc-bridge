@@ -109,7 +109,9 @@ async function deployToken(accounts: IAccount, deployment: Deployments) {
 
     await hre.changeNetwork(deployment.network);
     const factory = await hre.ethers.getContractFactory("TestLYT");
-    const contract = (await factory.connect(accounts.deployer).deploy(accounts.deployer.address, accounts.protocolFee.address)) as TestLYT;
+    const contract = (await factory
+        .connect(accounts.deployer)
+        .deploy(accounts.deployer.address, accounts.protocolFee.address)) as TestLYT;
     await contract.deployed();
     await contract.deployTransaction.wait();
 
