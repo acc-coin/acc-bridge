@@ -3,8 +3,8 @@
 pragma solidity ^0.8.2;
 
 interface IBridge {
-    event BridgeDeposited(bytes32 tokenId, bytes32 depositId, address account, uint256 amount);
-    event BridgeWithdrawn(bytes32 tokenId, bytes32 withdrawId, address account, uint256 amount);
+    event BridgeDeposited(bytes32 tokenId, bytes32 depositId, address account, uint256 amount, uint256 balance);
+    event BridgeWithdrawn(bytes32 tokenId, bytes32 withdrawId, address account, uint256 amount, uint256 balance);
 
     struct DepositData {
         bytes32 tokenId;
