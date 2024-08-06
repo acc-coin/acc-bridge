@@ -114,7 +114,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
 
             DepositData memory data = DepositData({ tokenId: _tokenId, account: msg.sender, amount: msg.value });
             deposits[_depositId] = data;
-            emit BridgeDeposited(_tokenId, _depositId, data.account, data.amount);
+            emit BridgeDeposited(_tokenId, _depositId, data.account, data.amount, 0);
         } else {
             require(_amount % 1 gwei == 0, "1030");
             require(_amount > tokenInfos[_tokenId].fee, "1031");
@@ -123,7 +123,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
             if (token.delegatedTransfer(_account, address(this), _amount, _expiry, _signature)) {
                 DepositData memory data = DepositData({ tokenId: _tokenId, account: _account, amount: _amount });
                 deposits[_depositId] = data;
-                emit BridgeDeposited(_tokenId, _depositId, data.account, data.amount);
+                emit BridgeDeposited(_tokenId, _depositId, data.account, data.amount, 0);
             }
         }
     }
@@ -160,7 +160,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                     payable(_account).transfer(withdrawalAmount);
                     payable(protocolFeeAccount).transfer(tokenInfos[_tokenId].fee);
                     withdraws[_withdrawId].executed = true;
-                    emit BridgeWithdrawn(_tokenId, _withdrawId, _account, withdrawalAmount);
+                    emit BridgeWithdrawn(_tokenId, _withdrawId, _account, withdrawalAmount, 0);
                 }
             }
         } else {
@@ -188,7 +188,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                     token.transfer(_account, withdrawalAmount);
                     token.transfer(protocolFeeAccount, tokenInfos[_tokenId].fee);
                     withdraws[_withdrawId].executed = true;
-                    emit BridgeWithdrawn(_tokenId, _withdrawId, _account, withdrawalAmount);
+                    emit BridgeWithdrawn(_tokenId, _withdrawId, _account, withdrawalAmount, 0);
                 }
             }
         }
@@ -208,7 +208,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                     payable(withdraws[_withdrawId].account).transfer(withdrawalAmount);
                     payable(protocolFeeAccount).transfer(tokenInfos[tokenId].fee);
                     withdraws[_withdrawId].executed = true;
-                    emit BridgeWithdrawn(tokenId, _withdrawId, withdraws[_withdrawId].account, withdrawalAmount);
+                    emit BridgeWithdrawn(tokenId, _withdrawId, withdraws[_withdrawId].account, withdrawalAmount, 0);
                 }
             } else {
                 BIP20DelegatedTransfer token = tokenInfos[tokenId].token;
@@ -216,7 +216,7 @@ contract Bridge is BridgeStorage, Initializable, OwnableUpgradeable, UUPSUpgrade
                     token.transfer(withdraws[_withdrawId].account, withdrawalAmount);
                     token.transfer(protocolFeeAccount, tokenInfos[tokenId].fee);
                     withdraws[_withdrawId].executed = true;
-                    emit BridgeWithdrawn(tokenId, _withdrawId, withdraws[_withdrawId].account, withdrawalAmount);
+                    emit BridgeWithdrawn(tokenId, _withdrawId, withdraws[_withdrawId].account, withdrawalAmount, 0);
                 }
             }
         }
